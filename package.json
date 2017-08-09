@@ -1,0 +1,14 @@
+{
+  "name": "spendings-graph",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "babyparse": "^0.4.6"
+   },
+  "author": "",
+  "license": "MIT"
+}

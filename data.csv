@@ -1,0 +1,5 @@
+date,account,category,amount,currency,converted amount,currency,description
+09/08/2017,Cash,Taxi,-50,UAH,-50,UAH,
+09/08/2017,Payment card,Lunch,-60,UAH,-60,UAH,
+09/08/2017,Payment card,Lunch,-65,UAH,-65,UAH,
+09/08/2017,Payment card,Transport,-5,UAH,-5,UAH,

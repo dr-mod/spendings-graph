@@ -1,11 +1,6 @@
 var babyparse = require("babyparse");
 var Rx = require('rxjs/Rx');
 
-function removeTitle(x) {
-  x.shift();
-  return x;
-}
-
 function aggregate(spendings) {
   var map = new Map();
   spendings.forEach((spending) => {
@@ -23,9 +18,9 @@ function aggregate(spendings) {
 var csv = babyparse.parseFiles("data.csv").data;
 
 Rx.Observable.of(csv)
-.map(removeTitle)
+.map((csv) => csv.slice(1))
 .map((csv) => csv.filter((x) => typeof x[2] !== 'undefined'))
 .map((csv) => csv.map((x) => [x[2], parseFloat(x[3])]))
-.flatMap((x) => Rx.Observable.from(x))
-//.map(aggregate)
+//.flatMap((x) => Rx.Observable.from(x))
+.map(aggregate)
 .forEach((x) => console.log(x));

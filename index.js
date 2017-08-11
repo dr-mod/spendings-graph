@@ -1,20 +1,31 @@
 var babyparse = require("babyparse");
+var Rx = require('rxjs/Rx');
 
+function removeTitle(x) {
+  x.shift();
+  return x;
+}
+
+function aggregate(spendings) {
+  var map = new Map();
+  spendings.forEach((spending) => {
+    if (map.has(spending[0])) {
+      var amount = map.get(spending[0]);
+      amount += spending[1];
+      map.set(spending[0], amount);
+    } else {
+      map.set(spending[0], spending[1]);
+    }
+  });
+  return map;
+}
 
 var csv = babyparse.parseFiles("data.csv").data;
 
-csv.shift();
-var cat = csv
-  .filter((x) => typeof x[2] !== 'undefined')
-  .map((x) => [x[2], parseFloat(x[3])]);
-console.log(cat);
-
-var result = cat.reduce((result, line) => {
-  if(!(line[0] in result)) {
-    result[line[0]] = line[1]
-  } else {
-    result[line[0]] += line[1]; 
-  }
-  return result;
-});
-console.log(result);
+Rx.Observable.of(csv)
+.map(removeTitle)
+.map((csv) => csv.filter((x) => typeof x[2] !== 'undefined'))
+.map((csv) => csv.map((x) => [x[2], parseFloat(x[3])]))
+.flatMap((x) => Rx.Observable.from(x))
+//.map(aggregate)
+.forEach((x) => console.log(x));

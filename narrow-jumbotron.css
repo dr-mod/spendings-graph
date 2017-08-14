@@ -66,7 +66,7 @@ body {
 .upload-drop-zone {
   height: 200px;
   border-width: 2px;
-  margin-bottom: 20px;
+  margin-top: 15px;
 }
 
 .upload-drop-zone {
@@ -97,5 +97,6 @@ body {
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+    padding: 2rem;
   }
 }

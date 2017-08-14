@@ -26,21 +26,33 @@ function genBackgroundColors(colorsCount) {
 }
 
 function createChart(data) {
+  $('#container').removeClass('hide');
   new Chart(ctx, {
       type: 'doughnut',
  
       data: {
           labels: [...data.keys()],
           datasets: [{
-              label: "My First dataset",
               backgroundColor: genBackgroundColors(data.size), 
               data: [...data.values()],
           }]
       },
  
-      options: {}
+      options: {
+        layout: {
+          padding: {
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0
+          }
+        },
+        legend: {
+           display: true,
+           position: 'bottom'
+         }
+       }
   });
-  $('#container').removeClass('hide');
   console.log([...data.keys()], [...data.values()])
 }
 

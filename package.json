@@ -7,8 +7,9 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "babyparse": "^0.4.6",
-    "rxjs": "^5.4.3"
+    "papaparse": "^4.3.5",
+    "rxjs": "^5.4.3",
+    "chart.js": "^2.6.0"
    },
   "author": "drmod",
   "license": ""

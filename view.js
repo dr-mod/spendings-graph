@@ -25,16 +25,16 @@ function genBackgroundColors(colorsCount) {
   return backgroundColors;
 }
 
-function createChart(data) {
+function createChart(tuple) {
   $('#container').removeClass('hide');
   new Chart(ctx, {
-      type: 'doughnut',
+      type: tuple[1],
  
       data: {
-          labels: [...data.keys()],
+          labels: [...tuple[0].keys()],
           datasets: [{
-              backgroundColor: genBackgroundColors(data.size), 
-              data: [...data.values()],
+              backgroundColor: genBackgroundColors(tuple[0].size), 
+              data: [...tuple[0].values()],
           }]
       },
  
@@ -53,7 +53,7 @@ function createChart(data) {
          }
        }
   });
-  console.log([...data.keys()], [...data.values()])
+  console.log(tuple)
 }
 
 function aggregate(spendings) {
@@ -70,6 +70,10 @@ function aggregate(spendings) {
   return map;
 }
 
+var chartStyleStream = Rx.Observable.fromEvent(document.getElementById('dropdownMenuButton'), 'click')
+   .map((x) => x.target.innerText.trim())
+   .startWith('doughnut');
+
 var buttonStream = Rx.Observable.fromEvent(document.getElementById('files'), 'change')
    .map((x)=> x.target.files[0]);
 var dropStream = Rx.Observable.fromEvent(document.getElementById('drop-zone'), 'drop')
@@ -82,6 +86,7 @@ Rx.Observable.merge(buttonStream, dropStream)
   .map((csv) => csv.filter((x) => typeof x[2] !== 'undefined'))
   .map((csv) => csv.map((x) => [x[2], (-1) * parseFloat(x[3])]))
   .map(aggregate)
+  .combineLatest(chartStyleStream, (x, y) => [x, y])
   .subscribe(createChart)
   
   
